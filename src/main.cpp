@@ -26,8 +26,8 @@ Mat RenderFrame(void)
 
 	// Load scene description 
 //	scene.ParseOBJ("../../../data/cone32.obj");
-	scene.ParseOBJ("../../../data/barney.obj");
-//	scene.ParseOBJ("../data/ground.obj");
+//	scene.ParseOBJ("../../../data/barney.obj");
+	scene.ParseOBJ("../../../data/ground.obj");
 
 #ifdef ENABLE_BSP
 	// Build BSPTree
@@ -62,14 +62,23 @@ Mat RenderFrame(void)
 
 
 #ifdef ENABLE_SUPERSAMPLING
-	auto sampleGenerator = std::make_unique<CSampleGeneratorRegular>();
+//	auto sampleGenerator = std::make_unique<CSampleGeneratorRegular>();
 //	auto sampleGenerator = std::make_unique<CSampleGeneratorRandom>();
-//	auto sampleGenerator = std::make_unique<CSampleGeneratorStratified>();
+	auto sampleGenerator = std::make_unique<CSampleGeneratorStratified>();
 	int nSamples = 16;
-
+	float *u = new float[nSamples];
+	float *v = new float[nSamples];
+	float *weight = new float[nSamples];
+	sampleGenerator->getSamples(nSamples, u, v, weight);
+	
 	for (int y = 0; y < img.rows; y++) {
 		for (int x = 0; x < img.cols; x++) {
-			// --- PUT YOUR CODE HERE ---
+			Vec3f color = Vec3f::all(0);
+			for (int s = 0; s < nSamples; s++) {
+				scene.m_pCamera->InitRay(x + u[s], y + v[s], ray); 	// initialize ray
+				color += weight[s] * scene.RayTrace(ray);
+			}
+			img.at<Vec3f>(y, x) = color;
 		}
 	}
 #else

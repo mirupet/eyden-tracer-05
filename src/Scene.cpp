@@ -17,7 +17,7 @@ void CScene::ParseOBJ(const std::string& fileName)
 	if (file.is_open()) {
 		std::cout << "Parsing OBJFile : " << fileName << std::endl;
 
-		std::shared_ptr<IShader> pShader = std::make_shared<CShaderEyelight>(RGB(1, 0.5f, 0));
+		std::shared_ptr<IShader> pShader = std::make_shared<CShaderEyelightTextured>(RGB(1, 0.5f, 0), "../../../data/barney.bmp");
 		std::vector<Vec3f> vVertexes;
 		std::vector<Vec3f> vNormals;
 		std::vector<Vec2f> vTextures;
@@ -57,11 +57,11 @@ void CScene::ParseOBJ(const std::string& fileName)
 				// std::cout << "Face: " << V << std::endl;
 				// std::cout << "Normal: " << N << std::endl;
 				//Add(std::make_shared<CPrimTriangle>(vVertexes[V.val[0]], vVertexes[V.val[1]], vVertexes[V.val[2]], pShader));
-				Add(std::make_shared<CPrimTriangleSmooth>(vVertexes[V.val[0]], vVertexes[V.val[1]], vVertexes[V.val[2]],
-														  vNormals[N.val[0]], vNormals[N.val[1]], vNormals[N.val[2]], pShader));
-				//Add(std::make_shared<CPrimTriangleSmoothTextured>(vVertexes[V.val[0]], vVertexes[V.val[1]], vVertexes[V.val[2]],
-				//	vNormals[N.val[0]], vNormals[N.val[1]], vNormals[N.val[2]],
-				//	vTextures[T.val[0]], vTextures[T.val[1]], vTextures[T.val[2]], pShader));
+				//Add(std::make_shared<CPrimTriangleSmooth>(vVertexes[V.val[0]], vVertexes[V.val[1]], vVertexes[V.val[2]],
+				//										  vNormals[N.val[0]], vNormals[N.val[1]], vNormals[N.val[2]], pShader));
+				Add(std::make_shared<CPrimTriangleSmoothTextured>(vVertexes[V.val[0]], vVertexes[V.val[1]], vVertexes[V.val[2]],
+					vNormals[N.val[0]], vNormals[N.val[1]], vNormals[N.val[2]],
+					vTextures[T.val[0]], vTextures[T.val[1]], vTextures[T.val[2]], pShader));
 			}
 			else if (line == "#") {}
 			else {

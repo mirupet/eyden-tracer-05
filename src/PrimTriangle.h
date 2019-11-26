@@ -53,9 +53,8 @@ public:
 		f *= inv_det;
 		if (ray.t <= f || f <  Epsilon  ) return false;
 		
-		// --- PUT YOUR CODE HERE ---
-		// ray.u = ...
-		// ray.v = ...
+		ray.u = lambda;
+		ray.v = mue;
 
 		ray.t = f;
 		ray.hit = this;

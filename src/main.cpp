@@ -25,7 +25,7 @@ Mat RenderFrame(void)
 	CScene scene;
 
 	// Load scene description 
-	scene.ParseOBJ("../data/cone32.obj");
+	scene.ParseOBJ("../../../data/cone32.obj");
 //	scene.ParseOBJ("../data/barney.obj");
 //	scene.ParseOBJ("../data/ground.obj");
 

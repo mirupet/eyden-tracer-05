@@ -22,11 +22,14 @@ If everything is correct your images should look like this:
 
 ## Problem 5.3
 ### Glass Shading (Points 50)
-Until now we have only used one color per object. Nevertheless, in reality, _e.g._ in games, objects are very often colorful because of the usage of textures. This is also a way of making a surface look more geometrically complex. Usually, textures are used by storing _texture coordinates_ at the vertices of each triangles, and interpolating those to find the correct texel that has to be used for a surface point.
-1. Turn BSP-support on
-2. In the framework is a new class ```CPrimTriangleSmoothTextured``` (derived from ```CPrimTriangleSmooth```), that additionally has the three fields ```Vec2f ta, tb, tc```, which correspond to the texture coordinates at vertex ```a```, ```b```, and ```c```, respectively. Here we will use ```Vec2f```’s to store the texture coordinates (not ```Vec3f```), because they require only 2 coordinates (barycentric coordinates). Add support for texture coordinates to your parser (```CScene::ParseOBJ()```).
-3. Implemet the method ```Vec2f CPrimTriangleSmoothTextured::getUV(const Ray& ray) const``` which is now a virtual method in your primitive base class. In ```CPrimTriangleSmoothTextured```, implement this function to return the _x_ and _y_ coordinates of the interpolated vertex texture coordinates. (For other primitives, just ignore it for now, we’ll only use texture-shaders with triangles for now).
-4. Implement the ```CShaderEyelightTextured::Shade()``` method to use the texture coordinates returned by ```getUV()``` and combine the texel color with the calculated eyelight color using the vector product. 
+In order to create the naturally-looking glass matherial, we need to combine reflections and refractions from the previouse problems. Please use the following proportions: 
+- Ambient coefficient: 0
+- Diffuse reflection coefficient: 0.1
+- Specular refelection coefficient: 2
+- Shininess exponent: 80
+- Perfect reflection (mirror) coefficient: 0.2
+- Perfect transmission coefficient: 0.8
+- The refractive index of the medium: 1.5
 
-Test your implementation on barney.obj with barney.bmp. If everything is correct your image should look like this:
-![barney](./doc/barney.jpg)
+Test your implementation on torus knot.obj. If everything is correct your image should look like this:
+![](./doc/torus.jpg) 

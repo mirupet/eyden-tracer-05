@@ -24,6 +24,7 @@ Mat RenderFrame(void)
 	// Define a scene
 	CScene scene;
 
+	auto pShaderLight	= std::make_shared<CShaderFlat>(RGB(1, 1, 1));
 	auto pShaderWhite	= std::make_shared<CShaderPhong>(scene, RGB(1, 1, 1), 0.5f, 0.5f, 0, 0);
 	auto pShaderRed		= std::make_shared<CShaderPhong>(scene, RGB(1, 0, 0), 0.5f, 0.5f, 0, 0);
 	
@@ -32,9 +33,12 @@ Mat RenderFrame(void)
 
 	scene.Add(std::make_shared<CPrimTriangle>(Vec3f(0, 0, 50), Vec3f(0, 0, -50), Vec3f(-50, 0, -50), pShaderWhite));
 	scene.Add(std::make_shared<CPrimTriangle>(Vec3f(0, 0, -50), Vec3f(0, 0, 50), Vec3f(50, 0, 50), pShaderRed));
+	scene.Add(std::make_shared<CPrimTriangle>(Vec3f(-10, 10.1f, -10), Vec3f(10, 10.1f, -10), Vec3f(-10, 10.1f, 10), pShaderLight));
+	scene.Add(std::make_shared<CPrimTriangle>(Vec3f(10, 10.1f, 10), Vec3f(-10, 10.1f, 10), Vec3f(10, 10.1f, -10), pShaderLight));
 	
-	scene.Add(std::make_shared<CLightPoint>(Vec3f::all(5), Vec3f(0, 4, 10)));
-	scene.Add(std::make_shared<CLightPoint>(Vec3f::all(5), Vec3f(0, 10, 0)));
+	scene.Add(std::make_shared<CLightPoint>(Vec3f::all(50), Vec3f(0, 4, 10)));
+	//scene.Add(std::make_shared<CLightArea>(Vec3f::all(6), Vec3f(-10, 10, -10), Vec3f(10, 10, -10), Vec3f(10, 10, 10), Vec3f(-10, 10, 10)));
+	scene.Add(std::make_shared<CLightPoint>(Vec3f::all(50), Vec3f(0, 10, 0)));
 	
 #ifdef ENABLE_BSP
 	// Build BSPTree

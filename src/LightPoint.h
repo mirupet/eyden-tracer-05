@@ -28,8 +28,8 @@ public:
 		ray.dir = normalize(ray.dir);
 	
 		// return attenuated intensity
-		float attenuation = 1.0f / ray.t;
-		//float attenuation = 1.0f / (ray.t * ray.t);
+		//float attenuation = 1.0f / ray.t;
+		float attenuation = 1.0f / (ray.t * ray.t);
 		//float attenuation = 1.0f / (0.5f * ray.t + 1.0f); // linear attenuation
 		return attenuation * m_intensity;
 	}
